@@ -41,7 +41,7 @@ class PagamentoOnlineSerializer(serializers.Serializer, metaclass=ABCMeta):
         data = self.context['request'].data['params']
 
         attrs = self._clear_prefix(data)
-        # attrs['contratos'] = self.context['contratos']
+        attrs['contratos'] = self.context['contratos']
 
         return attrs
 
