@@ -22,10 +22,10 @@ class PagamentoOnlineFBBCEFAdapter(PagamentoOnlineAdapter):
         self.convenio_conta_leiaute_cef_numero_convenio = dados_entrada['numero_convenio']
         self.convenio_conta_leiaute_cef_versao_arquivo = dados_entrada['versao_arquivo']
         self.convenio_conta_leiaute_cef_versao_lote = dados_entrada['versao_lote']
-        self.convenio_conta_leiaute_cef_ambiente_cliente = dados_entrada['ambiente_cliente'].codigo
+        self.convenio_conta_leiaute_cef_ambiente_cliente = dados_entrada['ambiente_cliente']
         self.convenio_conta_leiaute_cef_transmissao = dados_entrada['transmissao']
         self.convenio_conta_leiaute_cef_compromisso = dados_entrada['compromisso']
-        self.convenio_conta_leiaute_cef_tipo_compromisso = dados_entrada['tipo_compromisso'].codigo
+        self.convenio_conta_leiaute_cef_tipo_compromisso = dados_entrada['tipo_compromisso']
         self.periodo_dia_vencimento = dados_entrada['dia_vencimento']
 
         for contrato in contratos:
@@ -51,7 +51,7 @@ class ServidorPagamentoFBBBradescoAdapter(ServidorPagamentoAdapter):
     def __init__(self, contrato):
         super(ServidorPagamentoFBBBradescoAdapter, self).__init__(contrato)
 
-        self.forma_lancamento = get_value_fk(contrato, 'forma_lancamento')
+        self.forma_lancamento = get_value_fk(contrato, 'forma_lancamento', ['conta', 'leiaute_fbb_brad'])
 
 
 class ServidorPagamentoFBBCEFAdapter(ServidorPagamentoAdapter):

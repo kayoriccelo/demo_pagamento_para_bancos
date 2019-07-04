@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -99,11 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-BR'
 
 TIME_ZONE = 'UTC'
 
@@ -113,8 +111,35 @@ USE_L10N = True
 
 USE_TZ = True
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_PAGINATION_CLASS': 'base.pagination.PageNumberPagination',
+    'PAGE_SIZE': 30,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DATETIME_INPUT_FORMATS': ('%d/%m/%Y', '%Y-%m-%dT%H:%M:%S.000Z', '%Y-%m-%d'),
+    'DATETIME_FORMAT': '%d/%m/%Y',
+
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+    ),
+}

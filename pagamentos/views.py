@@ -6,12 +6,11 @@ from pagamentos.serializers import PagamentoOnlineSerializer
 
 
 class PagamentoOnlineViewSet(APIView):
-    # neste momento você pode colocar a modelagem de contratos que você usa exemplo: Contrato.objects.all()
-    queryset = [Contrato()]
+    # nesta linha você pode colocar a modelagem de contratos que você usa exemplo: queryset = Contrato.objects.all()
     serializer_class = PagamentoOnlineSerializer
 
     def post(self, request):
-        serializer = self.serializer_class(data={}, context={'request': request, 'contratos': self.get_queryset()})
+        serializer = self.serializer_class(data={}, context={'request': request, 'contratos': [Contrato()]})
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data)
