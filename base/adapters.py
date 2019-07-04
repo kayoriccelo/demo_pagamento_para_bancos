@@ -22,15 +22,16 @@ class PagamentoOnlineAdapter(object):
         self.entidade_endereco_logradouro = get_value_fk(dados_entrada['cliente'], 'logradouro_entidade')
         self.entidade_endereco_numero = get_value_fk(dados_entrada['cliente'], 'log_numero_entidade')
         self.entidade_endereco_complemento = ''
-        self.entidade_endereco_cidade = get_value_fk(dados_entrada['cliente'], 'nome', ['cidade_entidade'])
-        self.entidade_endereco_cep = get_value_fk(dados_entrada['cliente'], 'cep_entidade').replace('.', '').replace('-', '')
+        self.entidade_endereco_cidade = get_value_fk(dados_entrada['cliente'], 'cidade')
+        self.entidade_endereco_cep = get_value_fk(
+            dados_entrada['cliente'], 'cep_entidade').replace('.', '').replace('-', '')
         self.entidade_endereco_cep_complemento = ''
-        self.entidade_endereco_uf = get_value_fk(dados_entrada['cliente'], 'sigla', ['uf_entidade'])
+        self.entidade_endereco_uf = get_value_fk(dados_entrada['cliente'], 'uf')
 
-        self.convenio_conta_agencia_banco_codigo = dados_entrada['conta'].convenio_agencia.banco.codigo
-        self.convenio_conta_agencia_banco_nome = dados_entrada['conta'].convenio_agencia.banco.descricao
-        self.convenio_conta_agencia_codigo = dados_entrada['conta'].convenio_agencia.numero_agencia
-        self.convenio_conta_agencia_digito = dados_entrada['conta'].convenio_agencia.digito
+        self.convenio_conta_agencia_banco_codigo = dados_entrada['conta'].codigo_banco
+        self.convenio_conta_agencia_banco_nome = dados_entrada['conta'].nome_banco
+        self.convenio_conta_agencia_codigo = dados_entrada['conta'].numero_agencia
+        self.convenio_conta_agencia_digito = dados_entrada['conta'].digito_agencia
         self.convenio_conta_codigo = dados_entrada['conta'].numero_conta
         self.convenio_conta_digito = dados_entrada['conta'].digito
         self.convenio_conta_nsa = dados_entrada['numero_sequencial_arquivo']

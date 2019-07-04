@@ -5,6 +5,7 @@ class PagamentoOnlineFBBBradescoAdapter(PagamentoOnlineAdapter):
 
     def __init__(self, dados_entrada, contratos):
         super(PagamentoOnlineFBBBradescoAdapter, self).__init__(dados_entrada, contratos)
+
         self.convenio_conta_leiaute_brad_numero_convenio = dados_entrada['numero_convenio']
         self.convenio_conta_leiaute_brad_versao_arquivo = dados_entrada['versao_arquivo']
         self.convenio_conta_leiaute_brad_versao_lote = dados_entrada['versao_lote']
@@ -17,6 +18,7 @@ class PagamentoOnlineFBBCEFAdapter(PagamentoOnlineAdapter):
 
     def __init__(self, dados_entrada, contratos):
         super(PagamentoOnlineFBBCEFAdapter, self).__init__(dados_entrada, contratos)
+
         self.convenio_conta_leiaute_cef_numero_convenio = dados_entrada['numero_convenio']
         self.convenio_conta_leiaute_cef_versao_arquivo = dados_entrada['versao_arquivo']
         self.convenio_conta_leiaute_cef_versao_lote = dados_entrada['versao_lote']
@@ -34,6 +36,7 @@ class PagamentoOnlineFBBBancoBrasilAdapter(PagamentoOnlineAdapter):
 
     def __init__(self, dados_entrada, contratos):
         super(PagamentoOnlineFBBBancoBrasilAdapter, self).__init__(dados_entrada, contratos)
+
         self.convenio_conta_leiaute_bb_numero_convenio = dados_entrada['numero_convenio']
         self.convenio_conta_leiaute_bb_versao_arquivo = dados_entrada['versao_arquivo']
         self.convenio_conta_leiaute_bb_versao_lote = dados_entrada['versao_lote']
