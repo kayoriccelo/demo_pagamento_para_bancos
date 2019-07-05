@@ -153,7 +153,7 @@ class GeracaoFebraban(object):
 
         def bradesco(dados):
             detalhe = DetalheSegmentoABradesco()
-            detalhe.numero_doc_atribuido_empresa = dados.convenio_conta_leiaute_brad_numero
+            detalhe.numero_doc_atribuido_empresa = dados.convenio_conta_leiaute_brad_numero_convenio
             detalhe.data_pagamento = self.arquivo.header.data_geracao_arquivo
             detalhe.valor_pagamento = str(locale.currency(
                 servidor.valor_pagamento, grouping=True, symbol=None).replace('.', '').replace(',', '')).zfill(15)

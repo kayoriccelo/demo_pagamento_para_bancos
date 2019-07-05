@@ -1,16 +1,17 @@
 
 class LeiauteFBBBase(object):
     numero_sequencial_arquivo = '1'
+    forma_lancamento = '01'
+    versao_arquivo = '089'
 
 
 class LeiauteFBBBradesco(LeiauteFBBBase):
-    numero_convenio = ''
-    versao_arquivo = ''
+    numero_convenio = '141251'
     versao_lote = ''
 
+
 class LeiauteFBBCEF(LeiauteFBBBase):
-    numero_convenio = ''
-    versao_arquivo = ''
+    numero_convenio = '654789'
     versao_lote = ''
     ambiente_cliente = ''
     transmissao = ''
@@ -19,20 +20,18 @@ class LeiauteFBBCEF(LeiauteFBBBase):
 
 
 class LeiauteFBBBancoBrasil(LeiauteFBBBase):
-    numero_convenio = ''
-    versao_arquivo = ''
+    numero_convenio = '123456'
     versao_lote = ''
-    forma_lancamento = ''
 
 
 class Conta(object):
     codigo_banco = '107'
     nome_banco = 'BRADESCO'
-    numero_agencia = ''
-    digito_agencia = ''
-    numero_conta = ''
-    digito_conta = ''
-    tipo_conta = ''
+    numero_agencia = '0731'
+    digito_agencia = ' '
+    numero_conta = '1905709'
+    digito_conta = '7'
+    tipo_conta = '1'
 
     leiaute_fbb_brad = LeiauteFBBBradesco()
     leiaute_fbb_cef = LeiauteFBBCEF()
@@ -40,27 +39,25 @@ class Conta(object):
 
 
 class Empresa(object):
-    cnpj = ''
-    razao = ''
-    cep = ''
-    logradouro = ''
-    logradouro_numero = ''
-    cidade = ''
-    uf = ''
+    cnpj = '43339622000151'
+    razao = 'Empresa Teste Informática ME'
+    cep = '60356620'
+    logradouro = 'Vila Dona Branca'
+    logradouro_numero = '682'
+    cidade = 'Fortaleza'
+    uf = 'CE'
 
 
 class Contrato(object):
-    cpf = ''
-    nome = ''
-    cep = ''
-    logradouro = ''
-    numero = ''
+    cpf = '83410871977'
+    nome = 'Nelson Davi Santos'
+    cep = '49075040'
+    logradouro = 'Vila Amapá'
+    numero = '431'
     complemento = ''
-    bairro = ''
-    cidade = ''
-    uf = ''
-
+    bairro = 'Siqueira Campos'
+    cidade = 'Aracaju'
+    uf = 'SE'
     liquido = 10000.00
-
     conta = Conta()
 

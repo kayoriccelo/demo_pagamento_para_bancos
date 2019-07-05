@@ -1,36 +1,40 @@
 import datetime
 from collections import OrderedDict
+
+from pkg_resources._vendor.pyparsing import empty
 from rest_framework import serializers
 
 from contratos.models import Conta, Empresa
 from febraban import builders
 from febraban.processos import ProcessoPagamentoFebraban
 
-# TODO - Kayo Riccelo: estes dados vem do frontend conforme as configurações do usuario
-params = {
-    'conta': Conta(),
-    'data_pagamento': '01/07/2016',
-    'dia_vencimento': '05',
-    'ambiente_cliente': '',
-    'camara_centralizadora': '',
-    'forma_parcelamento_pagto': '',
-    'forma_lancamento': '',
-    'tipo_compromisso': ''
-}
-
 
 class PagamentoOnlineSerializer(serializers.Serializer):
+
+    def __init__(self, instance=None, data=empty, **kwargs):
+        super(PagamentoOnlineSerializer, self).__init__(instance, data, **kwargs)
+
+        # TODO - Kayo Riccelo: estes dados vem do frontend conforme as configurações do usuario
+        conta = Conta()
+        self.params = {
+            'conta': conta,
+            'data_pagamento': '01/07/2016',
+            'dia_vencimento': '05',
+        }
+
+        for key in [field for field in conta.leiaute_fbb_brad.__dir__() if field.find('__') == -1]:
+            self.params[key] = conta.leiaute_fbb_brad.__getattribute__(key)
 
     def _get_processo_pagamento(self):
         if self.validated_data['tipo_pagamento'] == 'febraban':
             self.processo = ProcessoPagamentoFebraban
 
     def _get_builder(self):
-        if self.validated_data['conta'].banco == '107':
+        if self.validated_data['conta'].codigo_banco == '107':
             self.builder = builders.PagamentoOnlineFBBBradescoBuilder
-        elif self.validated_data['conta'].banco == '104':
+        elif self.validated_data['conta'].codigo_banco == '104':
             self.builder = builders.PagamentoOnlineFBBCEFBuilder
-        elif self.validated_data['conta'].banco == '001':
+        elif self.validated_data['conta'].codigo_banco == '001':
             self.builder = builders.PagamentoOnlineFBBBancoBrasilBuilder
 
         self._get_processo_pagamento()
@@ -38,25 +42,27 @@ class PagamentoOnlineSerializer(serializers.Serializer):
     def validate(self, attrs):
         attrs['contratos'] = self.context['contratos']
 
-        if 'conta' in params:
-            attrs['conta'] = params.pop('conta')
+        if 'conta' in self.params:
+            attrs['conta'] = self.params.pop('conta')
         else:
             raise serializers.ValidationError({'error': 'Conta não encontrada.'})
 
-        if 'data_pagamento' in params:
-            attrs['data_pagamento'] = params.pop('data_pagamento')
+        if 'data_pagamento' in self.params:
+            attrs['data_pagamento'] = self.params.pop('data_pagamento')
         else:
             raise serializers.ValidationError({'error': f'Data do pagamento não informada. '})
 
-        if 'dia_vencimento' in params:
-            attrs['dia_vencimento'] = params.pop('dia_vencimento')
+        if 'dia_vencimento' in self.params:
+            attrs['dia_vencimento'] = self.params.pop('dia_vencimento')
         else:
             raise serializers.ValidationError({'error': f'Dia do vencimento não informada. '})
 
         attrs['cliente'] = Empresa()
 
-        for item in params:
-            attrs[item] = params[item]
+        for item in self.params:
+            attrs[item] = self.params[item]
+
+        attrs['tipo_pagamento'] = 'febraban'
 
         return attrs
 
@@ -67,7 +73,7 @@ class PagamentoOnlineSerializer(serializers.Serializer):
         adapter = builder.build(self.validated_data['contratos'])
 
         processo = self.processo()
-        processo.geracao(adapter, self.validated_data['conta'].banco)
+        processo.geracao(adapter, self.validated_data['conta'].codigo_banco)
 
         ret = OrderedDict()
         ret['file'] = processo.exportacao()

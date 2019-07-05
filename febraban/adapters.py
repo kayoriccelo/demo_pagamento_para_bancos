@@ -60,9 +60,8 @@ class ServidorPagamentoFBBCEFAdapter(ServidorPagamentoAdapter):
         super(ServidorPagamentoFBBCEFAdapter, self).__init__(contrato)
 
         self.forma_lancamento = get_value_fk(contrato, 'forma_lancamento')
-        self.numero_doc_atribuido_empresa = get_value_fk(contrato, 'convenio_leiaute_pagto_cef_fbb_numero_convenio')
-        self.indicador_forma_parcelamento = get_value_fk(
-            contrato, 'convenio_leiaute_pagto_cef_fbb_forma_lancamento_codigo')
+        self.numero_doc_atribuido_empresa = get_value_fk(contrato, 'numero_convenio', ['conta', 'leiaute_fbb_bb'])
+        self.indicador_forma_parcelamento = get_value_fk(contrato, 'forma_lancamento', ['conta', 'leiaute_fbb_cef'])
 
 
 class ServidorPagamentoFBBBancoBrasilAdapter(ServidorPagamentoAdapter):
@@ -70,5 +69,5 @@ class ServidorPagamentoFBBBancoBrasilAdapter(ServidorPagamentoAdapter):
     def __init__(self, contrato):
         super(ServidorPagamentoFBBBancoBrasilAdapter, self).__init__(contrato)
 
-        self.forma_lancamento = get_value_fk(contrato, 'convenio_leiaute_pgto_bb_fbb_forma_lancamento')
-        self.numero_doc_atribuido_empresa = get_value_fk(contrato, 'convenio_leiaute_pgto_bb_fbb_numero_convenio')
+        self.forma_lancamento = get_value_fk(contrato, 'forma_lancamento', ['conta', 'leiaute_fbb_bb'])
+        self.numero_doc_atribuido_empresa = get_value_fk(contrato, 'numero_convenio', ['conta', 'leiaute_fbb_bb'])
